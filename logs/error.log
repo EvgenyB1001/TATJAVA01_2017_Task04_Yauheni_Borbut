@@ -1,0 +1,1 @@
+2017-02-08T15:23:52,772 [ERROR] (FindByTitleCommand.java:52) - com.epam.task03.lib.dao.exception.DAOException: Request isn't initialized. It can't be performed
