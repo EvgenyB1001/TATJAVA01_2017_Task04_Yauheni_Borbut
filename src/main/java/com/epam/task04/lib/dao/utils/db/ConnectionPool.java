@@ -3,7 +3,6 @@ package com.epam.task04.lib.dao.utils.db;
 import com.epam.task04.lib.dao.utils.db.exception.ConnectionPoolException;
 import com.epam.task04.lib.dao.utils.db.resource.DBResourceManager;
 import com.epam.task04.lib.exception.InitializationException;
-import com.sun.org.apache.bcel.internal.generic.RET;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -39,20 +38,17 @@ public final class ConnectionPool {
 
     private final String USER = "db.user";
     private final String PASSWORD = "db.password";
-    private final String DRIVER = "db.driver";
     private final String URL = "db.url";
     private final String POOL_SIZE = "db.poolsize";
 
     private final int DEFAULT_POOL_SIZE = 5;
 
-    private String driver;
     private String url;
     private String userName;
     private String password;
     private int poolSize;
 
     private final String SQL_EXCEPTION = "SQL exception during executing";
-    private final String CLASS_NOT_FOUND_EXCEPTION = "DB driver class is not found";
     private final String INIT_QUEUE_EXCEPTION = "Queue to close isn't initialized";
     private final String ALREADY_CLOSED_CONNECTION_EXCEPTION = "Can't close already closed connection";
     private final String RETURN_CONNECTION_EXCEPTION = "Exception while executing returning connection to pool";
@@ -63,7 +59,6 @@ public final class ConnectionPool {
      */
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
-        this.driver = dbResourceManager.getString(DRIVER);
         this.url = dbResourceManager.getString(URL);
         this.userName = dbResourceManager.getString(USER);
         this.password = dbResourceManager.getString(PASSWORD);
@@ -94,7 +89,6 @@ public final class ConnectionPool {
         Locale.setDefault(Locale.ENGLISH);
         try {
             if (connectionsQueue == null && givenAwayConnectionsQueue == null) {
-                Class.forName(driver);
                 givenAwayConnectionsQueue = new ArrayBlockingQueue<>(poolSize);
                 connectionsQueue = new ArrayBlockingQueue<>(poolSize);
                 for (int i = 0; i < poolSize; i++) {
@@ -105,8 +99,6 @@ public final class ConnectionPool {
             }
         } catch (SQLException e) {
             throw new ConnectionPoolException(SQL_EXCEPTION, e);
-        } catch (ClassNotFoundException e2) {
-            throw new ConnectionPoolException(CLASS_NOT_FOUND_EXCEPTION, e2);
         }
     }
 

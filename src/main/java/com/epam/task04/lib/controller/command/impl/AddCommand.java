@@ -38,15 +38,13 @@ public class AddCommand implements Command {
         NewsService newsService = factory.getNewsServiceImpl();
         String response;
         try {
-            newsService.init();
             newsService.addNews(request);
             response = SUCCESS_RESPONSE;
         } catch (IllegalArgumentException | ServiceException e) {
             response = FAIL_RESPONSE;
             logger.error(e);
-        } finally {
-            newsService.destroy();
         }
+
         return response;
     }
 }

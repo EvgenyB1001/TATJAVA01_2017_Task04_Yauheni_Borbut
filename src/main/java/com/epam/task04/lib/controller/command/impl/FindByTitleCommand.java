@@ -42,10 +42,9 @@ public class FindByTitleCommand implements Command {
         NewsService newsService = factory.getNewsServiceImpl();
         String response;
         try {
-            newsService.init();
             ArrayList<News> result = newsService.findNewsByTitle(request);
             StringBuilder builder = new StringBuilder();
-            response = RESPONSE_HEADER + result.size();
+            response = RESPONSE_HEADER + result.size() + "\n";
             for(News news : result) {
                 builder.append(news.getTitle()).append(PARAMS_DELIMITER).
                         append(news.getCategory()).append(PARAMS_DELIMITER).
@@ -56,8 +55,6 @@ public class FindByTitleCommand implements Command {
         } catch (ServiceException e) {
             response = FAIL_RESPONSE;
             logger.error(e.getMessage());
-        } finally {
-            newsService.destroy();
         }
 
         return response;

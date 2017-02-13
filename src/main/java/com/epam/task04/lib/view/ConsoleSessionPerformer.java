@@ -10,6 +10,7 @@ import java.util.Scanner;
 public class ConsoleSessionPerformer {
 
     private final String WELCOME_TEXT = "Hello! Type in command to perform";
+
     /**
      * Method gets line with request from user and resend it
      * to controller to perform request
@@ -27,7 +28,9 @@ public class ConsoleSessionPerformer {
          * String exampleRequest4 = "find_by_date 13:11:2001";
          */
         CommandController controller = CommandController.getInstance();
+        controller.init();
         String response1 = controller.executeRequest(line);
         System.out.println(response1);
+        controller.destroy();
     }
 }

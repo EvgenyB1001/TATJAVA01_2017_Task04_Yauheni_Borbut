@@ -5,17 +5,24 @@ import com.epam.task04.lib.bean.CommandName;
 import com.epam.task04.lib.bean.Request;
 import com.epam.task04.lib.controller.command.Command;
 import com.epam.task04.lib.exception.InitializationException;
+import com.epam.task04.lib.service.NewsService;
+import com.epam.task04.lib.service.exception.ServiceException;
+import com.epam.task04.lib.service.factory.NewsServiceFactory;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 /**
- * Class provides actions to perform command according to request from user
+ * Class provides actions to perform command according to request from user. Work of this class starts
+ * with method <code>init</code>, that initializes resources and ends with method <code>destroy</code>
  */
 public class CommandController {
 
     private static final Logger logger = LogManager.getLogger();
     private CommandProvider provider = new CommandProvider();
     private static CommandController instance;
+
+    private NewsServiceFactory factory = NewsServiceFactory.getInstance();
+    private NewsService newsService = factory.getNewsServiceImpl();
 
     private final String REQUEST_INIT_EXCEPTION = "Request isn't initialized. Request can't be created";
     private final String INPUT_TEXT_INIT_EXCEPTION = "Invalid text of request. Request can't be created";
@@ -39,6 +46,16 @@ public class CommandController {
     private final String FAIL_RESPONSE = "Some errors during executing request. Try again";
 
     /**
+     * Method initializes resources, that required to app work
+     */
+    public void init() {
+        try {
+            newsService.init();
+        } catch (ServiceException e) {
+            logger.error(e);
+        }
+    }
+    /**
      * Method gets request as argument and calls definite command to execute current request
      *
      * @param line line of parameters of request to execute
@@ -61,7 +78,12 @@ public class CommandController {
         return response;
     }
 
-
+    /**
+     * Method frees resources, that required to app work
+     */
+    public void destroy() {
+        newsService.destroy();
+    }
 
     /**
      * Method gets array of parameters, parses them, creates a request by this parameters and returns that
