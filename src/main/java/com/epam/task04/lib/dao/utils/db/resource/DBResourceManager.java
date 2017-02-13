@@ -14,6 +14,8 @@ public class DBResourceManager {
 
     private ResourceBundle bundle = ResourceBundle.getBundle(PROPERTIES_FILE_NAME, Locale.ENGLISH);
 
+    private DBResourceManager() {}
+
     /**
      * Singleton implementation
      */
