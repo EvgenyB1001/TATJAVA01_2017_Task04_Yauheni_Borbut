@@ -31,9 +31,11 @@ public class Request implements Serializable {
      */
     private String date;
 
-    private final String INIT_EXCEPTION_TEXT = "Parameters to create request are not initialized";
+    private static final String INIT_EXCEPTION_TEXT = "Parameters to create request are not initialized";
 
-    public Request() {}
+    public Request() {
+        super();
+    }
 
     /**
      * Method sets title of news to current request

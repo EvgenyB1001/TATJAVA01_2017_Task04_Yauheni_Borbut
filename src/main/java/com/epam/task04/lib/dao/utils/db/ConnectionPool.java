@@ -1,13 +1,11 @@
 package com.epam.task04.lib.dao.utils.db;
 
 import com.epam.task04.lib.dao.utils.db.exception.ConnectionPoolException;
-import com.epam.task04.lib.dao.utils.db.resource.DBResourceManager;
 import com.epam.task04.lib.exception.InitializationException;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
-import java.util.Locale;
 import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -36,23 +34,23 @@ public final class ConnectionPool {
      */
     private BlockingQueue<Connection> givenAwayConnectionsQueue;
 
-    private final String USER = "db.user";
-    private final String PASSWORD = "db.password";
-    private final String URL = "db.url";
-    private final String POOL_SIZE = "db.poolsize";
+    private static final String USER = "db.user";
+    private static final String PASSWORD = "db.password";
+    private static final String URL = "db.url";
+    private static final String POOL_SIZE = "db.poolsize";
 
-    private final int DEFAULT_POOL_SIZE = 5;
+    private static final int DEFAULT_POOL_SIZE = 5;
 
     private String url;
     private String userName;
     private String password;
     private int poolSize;
 
-    private final String SQL_EXCEPTION = "SQL exception during executing";
-    private final String INIT_QUEUE_EXCEPTION = "Queue to close isn't initialized";
-    private final String ALREADY_CLOSED_CONNECTION_EXCEPTION = "Can't close already closed connection";
-    private final String RETURN_CONNECTION_EXCEPTION = "Exception while executing returning connection to pool";
-    private final String REMOVE_CONNECTION_EXCEPTION = "Exception while executing removing from pool of given connections";
+    private static final String SQL_EXCEPTION = "SQL exception during executing";
+    private static final String INIT_QUEUE_EXCEPTION = "Queue to close isn't initialized";
+    private static final String ALREADY_CLOSED_CONNECTION_EXCEPTION = "Can't close already closed connection";
+    private static final String RETURN_CONNECTION_EXCEPTION = "Exception while executing returning connection to pool";
+    private static final String REMOVE_CONNECTION_EXCEPTION = "Exception while executing removing from pool of given connections";
 
     /**
      * Constructor gets parameters from .resource file by object of special class
@@ -86,7 +84,6 @@ public final class ConnectionPool {
      * @throws ConnectionPoolException if there are errors of creating connections
      */
     public void initConnectionPool() throws ConnectionPoolException {
-        Locale.setDefault(Locale.ENGLISH);
         try {
             if (connectionsQueue == null && givenAwayConnectionsQueue == null) {
                 givenAwayConnectionsQueue = new ArrayBlockingQueue<>(poolSize);

@@ -9,7 +9,8 @@ import com.epam.task04.lib.exception.InitializationException;
  */
 public class WrongCommand implements Command {
 
-    private final String UNKNOWN_COMMAND_TEXT = "Application doesn't provide such command";
+    private static final String UNKNOWN_COMMAND_TEXT = "Application doesn't provide such command";
+
     /**
      * Method just return response, that application doesn't provide that command
      */

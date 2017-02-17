@@ -18,12 +18,12 @@ import java.util.ArrayList;
 public class FindByTitleCommand implements Command {
 
     private static final Logger logger = LogManager.getLogger();
-    private final String FAIL_RESPONSE = "Some errors during searching news";
-    private final String RESPONSE_HEADER = "Found news: ";
-    private final String PARAMS_DELIMITER = " | ";
-    private final String NEWS_DELIMITER = " ; ";
+    private static final String FAIL_RESPONSE = "Some errors during searching news";
+    private static final String RESPONSE_HEADER = "Found news: ";
+    private static final String PARAMS_DELIMITER = " | ";
+    private static final String NEWS_DELIMITER = " ; ";
 
-    private final String REQUEST_INIT_EXCEPTION = "Request isn't initialized";
+    private static final String REQUEST_INIT_EXCEPTION = "Request isn't initialized";
 
     /**
      * Method gets request as argument, resend it and return response of command execution

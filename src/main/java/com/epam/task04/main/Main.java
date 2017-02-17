@@ -1,4 +1,4 @@
-package com.epam.task04;
+package com.epam.task04.main;
 
 import com.epam.task04.lib.view.ConsoleSessionPerformer;
 

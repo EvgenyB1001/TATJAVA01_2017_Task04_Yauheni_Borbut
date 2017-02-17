@@ -43,7 +43,6 @@ public class NewsDAOTxtImplTest {
     public Object[][] getIllegalNews() {
         return new Object[][] {
                 {new News()},
-                {null}
         };
     }
 
@@ -51,7 +50,6 @@ public class NewsDAOTxtImplTest {
     public Object[][] getIllegalRequests() {
         return new Object[][] {
                 {new Request()},
-                {null}
         };
     }
 

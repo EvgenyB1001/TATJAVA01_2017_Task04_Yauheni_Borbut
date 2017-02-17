@@ -9,7 +9,7 @@ import java.util.Scanner;
  */
 public class ConsoleSessionPerformer {
 
-    private final String WELCOME_TEXT = "Hello! Type in command to perform";
+    private static final String WELCOME_TEXT = "Hello! Type in command to perform";
 
     /**
      * Method gets line with request from user and resend it

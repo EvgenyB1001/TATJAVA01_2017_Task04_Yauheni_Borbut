@@ -1,6 +1,5 @@
-package com.epam.task04.lib.dao.utils.db.resource;
+package com.epam.task04.lib.dao.utils.db;
 
-import java.util.Locale;
 import java.util.ResourceBundle;
 
 /**
@@ -10,9 +9,9 @@ public class DBResourceManager {
 
     private static DBResourceManager instance;
 
-    private final String PROPERTIES_FILE_NAME = "database";
+    private static final String PROPERTIES_FILE_NAME = "database";
 
-    private ResourceBundle bundle = ResourceBundle.getBundle(PROPERTIES_FILE_NAME, Locale.ENGLISH);
+    private ResourceBundle bundle = ResourceBundle.getBundle(PROPERTIES_FILE_NAME);
 
     private DBResourceManager() {}
 

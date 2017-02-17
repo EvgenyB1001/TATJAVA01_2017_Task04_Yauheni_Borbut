@@ -20,20 +20,15 @@ import java.util.ArrayList;
 public class DBNewsDAOImpl implements NewsDAO {
 
     private static final Logger logger = LogManager.getLogger();
-    private ConnectionPool pool = ConnectionPool.getInstance();
 
-    private final String DB_NAME = "news";
+    private static final String INSERT_QUERY = "INSERT INTO news (title, category, date) VALUES (?, ?, ?)";
+    private static final String SELECT_TITLE_QUERY = "SELECT * FROM news WHERE title = ?";
+    private static final String SELECT_CATEGORY_QUERY = "SELECT * FROM news WHERE category = ?";
+    private static final String SELECT_DATE_QUERY = "SELECT * FROM news WHERE date = ?";
 
-    private final String INSERT_QUERY = "INSERT INTO " + DB_NAME + " (title, category, date) VALUES (?, ?, ?)";
-    private final String SELECT_TITLE_QUERY = "SELECT * FROM " + DB_NAME + " WHERE title = ?";
-    private final String SELECT_CATEGORY_QUERY = "SELECT * FROM " + DB_NAME + " WHERE category = ?";
-    private final String SELECT_DATE_QUERY = "SELECT * FROM " + DB_NAME + " WHERE date = ?";
-
-    private final String INIT_EXCEPTION_ADD_NEWS = "News aren't initialized. They can't be added";
-    private final String INIT_EXCEPTION_FIND_NEWS = "Request isn't initialized. It can't be performed";
-    private final String INIT_EXCEPTION_NEWS = "Error while creating news";
-    private final String SQL_EXCEPTION = "SQL exception during executing request";
-    private final String CONNECTON_POOL_EXCEPTION = "Exception in connection pool";
+    private static final String INIT_EXCEPTION_NEWS = "Error while creating news";
+    private static final String SQL_EXCEPTION = "SQL exception during executing request";
+    private static final String CONNECTON_POOL_EXCEPTION = "Exception in connection pool";
 
     /**
      * Method create pool of connections, that are required to application
@@ -41,7 +36,7 @@ public class DBNewsDAOImpl implements NewsDAO {
     @Override
     public void init() throws DAOException {
         try {
-            pool.initConnectionPool();
+            ConnectionPool.getInstance().initConnectionPool();
         } catch (ConnectionPoolException e) {
             throw new DAOException(e);
         }
@@ -56,9 +51,8 @@ public class DBNewsDAOImpl implements NewsDAO {
      */
     @Override
     public void addNews(News news) throws DAOException {
-        if (news == null || news.getTitle() == null || news.getDate() == null || news.getCategory() == null) {
-            throw new DAOException(INIT_EXCEPTION_ADD_NEWS);
-        }
+
+        ConnectionPool pool = ConnectionPool.getInstance();
 
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -92,7 +86,6 @@ public class DBNewsDAOImpl implements NewsDAO {
     }
 
 
-
     /**
      * Method creates and executes query, and return list of news selected by category from request, got as argument
      *
@@ -102,10 +95,8 @@ public class DBNewsDAOImpl implements NewsDAO {
      */
     @Override
     public ArrayList<News> getNewsByCategory(Request request) throws DAOException {
-        if (request == null || request.getCategory() == null) {
-            throw new DAOException(INIT_EXCEPTION_FIND_NEWS);
-        }
 
+        ConnectionPool pool = ConnectionPool.getInstance();
         ArrayList<News> result = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -168,10 +159,8 @@ public class DBNewsDAOImpl implements NewsDAO {
      */
     @Override
     public ArrayList<News> getNewsByTitle(Request request) throws DAOException {
-        if (request == null || request.getTitle() == null) {
-            throw new DAOException(INIT_EXCEPTION_FIND_NEWS);
-        }
 
+        ConnectionPool pool = ConnectionPool.getInstance();
         ArrayList<News> result = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -235,10 +224,8 @@ public class DBNewsDAOImpl implements NewsDAO {
      */
     @Override
     public ArrayList<News> getNewsByDate(Request request) throws DAOException {
-        if (request == null || request.getDate() == null) {
-            throw new DAOException(INIT_EXCEPTION_FIND_NEWS);
-        }
 
+        ConnectionPool pool = ConnectionPool.getInstance();
         ArrayList<News> result = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
@@ -296,6 +283,6 @@ public class DBNewsDAOImpl implements NewsDAO {
      */
     @Override
     public void destroy() {
-        pool.clearConnections();
+        ConnectionPool.getInstance().clearConnections();
     }
 }

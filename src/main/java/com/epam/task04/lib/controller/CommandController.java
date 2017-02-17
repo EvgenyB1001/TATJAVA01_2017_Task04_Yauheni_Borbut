@@ -4,6 +4,7 @@ import com.epam.task04.lib.bean.Category;
 import com.epam.task04.lib.bean.CommandName;
 import com.epam.task04.lib.bean.Request;
 import com.epam.task04.lib.controller.command.Command;
+import com.epam.task04.lib.controller.exception.ControllerRuntimeException;
 import com.epam.task04.lib.exception.InitializationException;
 import com.epam.task04.lib.service.NewsService;
 import com.epam.task04.lib.service.exception.ServiceException;
@@ -21,15 +22,18 @@ public class CommandController {
     private CommandProvider provider = new CommandProvider();
     private static CommandController instance;
 
+
+    private static final String REQUEST_INIT_EXCEPTION = "Request isn't initialized. Request can't be created";
+    private static final String INPUT_TEXT_INIT_EXCEPTION = "Invalid text of request. Request can't be created";
+    private static final String PARAMS_INIT_EXCEPTION = "Invalid parameters. Request can't be created";
+
+    private static final String COMMAND_DELIMITER = " ";
+    private static final String PARAMS_DELIMITER = ",";
+
+    private static final String FAIL_RESPONSE = "Some errors during executing request. Try again";
+
     private NewsServiceFactory factory = NewsServiceFactory.getInstance();
     private NewsService newsService = factory.getNewsServiceImpl();
-
-    private final String REQUEST_INIT_EXCEPTION = "Request isn't initialized. Request can't be created";
-    private final String INPUT_TEXT_INIT_EXCEPTION = "Invalid text of request. Request can't be created";
-    private final String PARAMS_INIT_EXCEPTION = "Invalid parameters. Request can't be created";
-
-    private final String COMMAND_DELIMITER = " ";
-    private final String PARAMS_DELIMITER = ",";
 
     private CommandController() {}
 
@@ -43,7 +47,7 @@ public class CommandController {
         return instance;
     }
 
-    private final String FAIL_RESPONSE = "Some errors during executing request. Try again";
+
 
     /**
      * Method initializes resources, that required to app work
@@ -53,6 +57,7 @@ public class CommandController {
             newsService.init();
         } catch (ServiceException e) {
             logger.error(e);
+            throw new ControllerRuntimeException(e);
         }
     }
     /**
@@ -64,6 +69,7 @@ public class CommandController {
         if (line == null) {
             return FAIL_RESPONSE;
         }
+
 
         String response;
         try {

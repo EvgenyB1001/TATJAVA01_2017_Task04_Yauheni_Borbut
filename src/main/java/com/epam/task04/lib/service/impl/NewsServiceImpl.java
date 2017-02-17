@@ -17,12 +17,12 @@ import java.util.ArrayList;
  */
 public class NewsServiceImpl implements NewsService {
 
-    private final String INIT_EXCEPTION_ADD_NEWS = "Request is not initialized. News can't be added";
-    private final String INIT_EXCEPTION_FIND_NEWS = "Request is not initialized. It can't be performed";
-    private final String VALIDATION_EXCEPTION_TITLE = "Invalid value of title";
-    private final String VALIDATION_EXCEPTION_CATEGORY = "Invalid value of category";
-    private final String VALIDATION_EXCEPTION_DATE = "Invalid format of date";
-    private final String DATE_DELIMITER = ":";
+    private static final String INIT_EXCEPTION_ADD_NEWS = "Request is not initialized. News can't be added";
+    private static final String INIT_EXCEPTION_FIND_NEWS = "Request is not initialized. It can't be performed";
+    private static final String VALIDATION_EXCEPTION_TITLE = "Invalid value of title";
+    private static final String VALIDATION_EXCEPTION_CATEGORY = "Invalid value of category";
+    private static final String VALIDATION_EXCEPTION_DATE = "Invalid format of date";
+    private static final String DATE_DELIMITER = ":";
 
     private NewsDAOFactory factory = NewsDAOFactory.getInstance();
     private NewsDAO newsDAO = factory.getNewsDAO();
@@ -134,7 +134,7 @@ public class NewsServiceImpl implements NewsService {
      * @throws ValidationException if data of current news isn't valid
      */
     private void validateNews(News news) throws ValidationException {
-        if (news.getTitle() == null || news.getTitle().equals("")) {
+        if (news.getTitle() == null || news.getTitle().isEmpty()) {
             throw new ValidationException(VALIDATION_EXCEPTION_TITLE);
         }
 

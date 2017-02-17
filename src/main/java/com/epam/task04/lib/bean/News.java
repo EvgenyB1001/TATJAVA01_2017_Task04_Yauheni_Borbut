@@ -26,10 +26,10 @@ public class News implements Serializable {
      */
     private String date;
 
-    private final String INIT_EXCEPTION_CONSTRUCTOR_TEXT = "Parameters are not initialized. News can't be created";
-    private final String INIT_EXCEPTION_SET_CATEGORY_TEXT = "Category isn't initialized";
-    private final String INIT_EXCEPTION_SET_DATE_TEXT = "Date isn't initialized";
-    private final String INIT_EXCEPTION_SET_TITLE_TEXT = "Title isn't initialized";
+    private static final String INIT_EXCEPTION_CONSTRUCTOR_TEXT = "Parameters are not initialized. News can't be created";
+    private static final String INIT_EXCEPTION_SET_CATEGORY_TEXT = "Category isn't initialized";
+    private static final String INIT_EXCEPTION_SET_DATE_TEXT = "Date isn't initialized";
+    private static final String INIT_EXCEPTION_SET_TITLE_TEXT = "Title isn't initialized";
 
     /**
      * Default constructor
