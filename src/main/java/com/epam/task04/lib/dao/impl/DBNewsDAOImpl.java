@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Class provides action with database to write and read news to it
@@ -95,12 +96,11 @@ public class DBNewsDAOImpl implements NewsDAO {
      */
     @Override
     public ArrayList<News> getNewsByCategory(Request request) throws DAOException {
-
         ConnectionPool pool = ConnectionPool.getInstance();
-        ArrayList<News> result = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
+        LinkedList<News> tempList = new LinkedList<>();
         try {
             connection = pool.takeConnection();
             preparedStatement = connection.prepareStatement(SELECT_CATEGORY_QUERY);
@@ -111,7 +111,7 @@ public class DBNewsDAOImpl implements NewsDAO {
                 String category = resultSet.getString(3);
                 String date = resultSet.getString(4);
                 News news = new News(title, Category.valueOf(category.toUpperCase()), date);
-                result.add(news);
+                tempList.add(news);
             }
 
         } catch (SQLException e) {
@@ -147,6 +147,7 @@ public class DBNewsDAOImpl implements NewsDAO {
             }
         }
 
+        ArrayList<News> result = new ArrayList<>(tempList);
         return result;
     }
 
@@ -161,10 +162,10 @@ public class DBNewsDAOImpl implements NewsDAO {
     public ArrayList<News> getNewsByTitle(Request request) throws DAOException {
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        ArrayList<News> result = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
+        LinkedList<News> tempList = new LinkedList<>();
         try {
             connection = pool.takeConnection();
             preparedStatement = connection.prepareStatement(SELECT_TITLE_QUERY);
@@ -175,7 +176,7 @@ public class DBNewsDAOImpl implements NewsDAO {
                 String category = resultSet.getString(3);
                 String date = resultSet.getString(4);
                 News news = new News(title, Category.valueOf(category.toUpperCase()), date);
-                result.add(news);
+                tempList.add(news);
             }
 
 
@@ -211,7 +212,7 @@ public class DBNewsDAOImpl implements NewsDAO {
             }
         }
 
-
+        ArrayList<News> result = new ArrayList<>(tempList);
         return result;
     }
 
@@ -226,10 +227,10 @@ public class DBNewsDAOImpl implements NewsDAO {
     public ArrayList<News> getNewsByDate(Request request) throws DAOException {
 
         ConnectionPool pool = ConnectionPool.getInstance();
-        ArrayList<News> result = new ArrayList<>();
         PreparedStatement preparedStatement = null;
         Connection connection = null;
         ResultSet resultSet = null;
+        LinkedList<News> tempList = new LinkedList<>();
         try {
             connection = pool.takeConnection();
             preparedStatement = connection.prepareStatement(SELECT_DATE_QUERY);
@@ -240,7 +241,7 @@ public class DBNewsDAOImpl implements NewsDAO {
                 String category = resultSet.getString(3);
                 String date = resultSet.getString(4);
                 News news = new News(title, Category.valueOf(category.toUpperCase()), date);
-                result.add(news);
+                tempList.add(news);
             }
 
         } catch (SQLException e) {
@@ -275,6 +276,7 @@ public class DBNewsDAOImpl implements NewsDAO {
             }
         }
 
+        ArrayList<News> result = new ArrayList<>(tempList);
         return result;
     }
 

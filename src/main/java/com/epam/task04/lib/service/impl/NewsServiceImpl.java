@@ -24,11 +24,10 @@ public class NewsServiceImpl implements NewsService {
     private static final String VALIDATION_EXCEPTION_DATE = "Invalid format of date";
     private static final String DATE_DELIMITER = ":";
 
-    private NewsDAOFactory factory = NewsDAOFactory.getInstance();
-    private NewsDAO newsDAO = factory.getNewsDAO();
-
     @Override
     public void init() throws ServiceException {
+        NewsDAOFactory factory = NewsDAOFactory.getInstance();
+        NewsDAO newsDAO = factory.getNewsDAO();
         try {
             newsDAO.init();
         } catch (DAOException e) {
@@ -48,6 +47,8 @@ public class NewsServiceImpl implements NewsService {
             throw new ServiceException(INIT_EXCEPTION_ADD_NEWS);
         }
 
+        NewsDAOFactory factory = NewsDAOFactory.getInstance();
+        NewsDAO newsDAO = factory.getNewsDAO();
         try {
             News news = new News(request.getTitle(), request.getCategory(), request.getDate());
             validateNews(news);
@@ -70,6 +71,8 @@ public class NewsServiceImpl implements NewsService {
             throw new ServiceException(INIT_EXCEPTION_FIND_NEWS);
         }
 
+        NewsDAOFactory factory = NewsDAOFactory.getInstance();
+        NewsDAO newsDAO = factory.getNewsDAO();
         ArrayList<News> news = new ArrayList<>();
         try {
             news = newsDAO.getNewsByTitle(request);
@@ -94,6 +97,8 @@ public class NewsServiceImpl implements NewsService {
             throw new ServiceException(INIT_EXCEPTION_FIND_NEWS);
         }
 
+        NewsDAOFactory factory = NewsDAOFactory.getInstance();
+        NewsDAO newsDAO = factory.getNewsDAO();
         ArrayList<News> news = new ArrayList<>();
         try {
             news = newsDAO.getNewsByCategory(request);
@@ -116,6 +121,9 @@ public class NewsServiceImpl implements NewsService {
         if (request == null) {
             throw new ServiceException(INIT_EXCEPTION_FIND_NEWS);
         }
+
+        NewsDAOFactory factory = NewsDAOFactory.getInstance();
+        NewsDAO newsDAO = factory.getNewsDAO();
 
         ArrayList<News> news = new ArrayList<>();
         try {
@@ -195,6 +203,8 @@ public class NewsServiceImpl implements NewsService {
 
     @Override
     public void destroy() {
+        NewsDAOFactory factory = NewsDAOFactory.getInstance();
+        NewsDAO newsDAO = factory.getNewsDAO();
         newsDAO.destroy();
     }
 }

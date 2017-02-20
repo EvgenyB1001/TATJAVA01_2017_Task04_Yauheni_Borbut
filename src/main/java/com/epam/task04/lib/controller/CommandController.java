@@ -32,9 +32,6 @@ public class CommandController {
 
     private static final String FAIL_RESPONSE = "Some errors during executing request. Try again";
 
-    private NewsServiceFactory factory = NewsServiceFactory.getInstance();
-    private NewsService newsService = factory.getNewsServiceImpl();
-
     private CommandController() {}
 
     /**
@@ -47,12 +44,12 @@ public class CommandController {
         return instance;
     }
 
-
-
     /**
      * Method initializes resources, that required to app work
      */
     public void init() {
+        NewsServiceFactory factory = NewsServiceFactory.getInstance();
+        NewsService newsService = factory.getNewsServiceImpl();
         try {
             newsService.init();
         } catch (ServiceException e) {
@@ -69,7 +66,6 @@ public class CommandController {
         if (line == null) {
             return FAIL_RESPONSE;
         }
-
 
         String response;
         try {
@@ -88,6 +84,8 @@ public class CommandController {
      * Method frees resources, that required to app work
      */
     public void destroy() {
+        NewsServiceFactory factory = NewsServiceFactory.getInstance();
+        NewsService newsService = factory.getNewsServiceImpl();
         newsService.destroy();
     }
 
