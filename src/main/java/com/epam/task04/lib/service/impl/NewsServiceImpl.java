@@ -53,7 +53,7 @@ public class NewsServiceImpl implements NewsService {
             News news = new News(request.getTitle(), request.getCategory(), request.getDate());
             validateNews(news);
             newsDAO.addNews(news);
-        } catch (DAOException | InitializationException | ValidationException e) {
+        } catch (DAOException | ValidationException e) {
             throw new ServiceException(e);
         }
     }

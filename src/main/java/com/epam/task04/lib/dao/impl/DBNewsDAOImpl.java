@@ -116,8 +116,6 @@ public class DBNewsDAOImpl implements NewsDAO {
 
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
-        } catch (InitializationException e) {
-            throw new DAOException(INIT_EXCEPTION_NEWS, e);
         } catch (ConnectionPoolException e2) {
             throw new DAOException(CONNECTON_POOL_EXCEPTION, e2);
         } finally {
@@ -182,8 +180,6 @@ public class DBNewsDAOImpl implements NewsDAO {
 
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
-        } catch (InitializationException e) {
-            throw new DAOException(INIT_EXCEPTION_NEWS, e);
         } catch (ConnectionPoolException e2) {
             throw new DAOException(CONNECTON_POOL_EXCEPTION, e2);
         } finally {
@@ -246,8 +242,6 @@ public class DBNewsDAOImpl implements NewsDAO {
 
         } catch (SQLException e) {
             throw new DAOException(SQL_EXCEPTION, e);
-        } catch (InitializationException e) {
-            throw new DAOException(INIT_EXCEPTION_NEWS, e);
         } catch (ConnectionPoolException e2) {
             throw new DAOException(CONNECTON_POOL_EXCEPTION, e2);
         } finally {
